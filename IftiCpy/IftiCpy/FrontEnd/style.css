@@ -1868,83 +1868,79 @@ h3, h4, h5, h6 {
     }
 }
 
-/* Smooth Scrolling */
-html {
-    scroll-behavior: smooth;
+/* Form Status Messages for Formspree Integration */
+.form-status {
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Animation Classes */
-.fade-in {
-    opacity: 0;
-    transform: translateY(50px);
-    transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.form-status::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.8s;
 }
 
-.fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
+.form-status.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
 }
 
-.animate-in {
-    animation: slideInUp 0.6s ease-out forwards;
+.form-status.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
 }
 
-@keyframes slideInUp {
+.form-status.success::before {
+    background: linear-gradient(90deg, transparent, rgba(21, 87, 36, 0.1), transparent);
+}
+
+.form-status.error::before {
+    background: linear-gradient(90deg, transparent, rgba(114, 28, 36, 0.1), transparent);
+}
+
+.form-status:hover::before {
+    left: 100%;
+}
+
+/* Dark theme form status styles */
+[data-theme="dark"] .form-status.success {
+    background-color: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+[data-theme="dark"] .form-status.error {
+    background-color: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+/* Animation for status message appearance */
+.form-status {
+    animation: slideInDown 0.5s ease-out;
+}
+
+@keyframes slideInDown {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(-20px);
     }
     to {
         opacity: 1;
         transform: translateY(0);
-    }
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-}
-
-/* Hover animations for interactive elements */
-.philosophy-image,
-.projects-image,
-.resume-preview {
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.philosophy-image:hover,
-.projects-image:hover,
-.resume-preview:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-}
-
-/* Smooth page transitions */
-
-/* Loading animation */
-.loading {
-    opacity: 0;
-    animation: fadeInLoad 1s ease-in-out forwards;
-}
-
-@keyframes fadeInLoad {
-    to {
-        opacity: 1;
     }
 }
