@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iftiaq Hossen - Web Developer</title>
+﻿<%@ Page Title="Iftiaq Hossen - Portfolio" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="IftiCpy._Default" %>
+
+<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <!-- Portfolio Styles and Scripts in Head -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="FrontEnd/style.css">
+
+    <!-- Portfolio Content with Dynamic Loading -->
+    
     <!-- Navigation Header -->
-    <nav class="navbar">
+    <nav class="navbar portfolio-nav">
         <div class="nav-container">
             <ul class="nav-menu">
                 <li class="nav-item">
@@ -39,7 +38,7 @@
         </div>
     </nav>
     
-    <div class="container">
+    <div class="portfolio-container">
         <!-- Header Section -->
         <header class="header" id="home">
             <div class="header-content">
@@ -86,16 +85,16 @@
             </div>
         </header>
 
- 
         <section class="intro">
             <p></p>
         </section>
 
-        <!-- Development Section -->
+        <!-- Development Section - Projects loaded dynamically from database -->
         <section class="development" id="portfolio">
             <h2>Portfolio</h2>
             <p>Every project starts with an idea. I work closely with clients and teams to bring visions to life through thoughtful design and development.</p>
             <div class="dev-grid">
+                <!-- Static fallback content - will be replaced by dynamic content from database -->
                 <div class="dev-item large">
                     <div class="project-content">
                         <h3>E-Commerce Platform</h3>
@@ -154,82 +153,17 @@
             <div class="about-content">
                 <div class="about-text">
                     <div class="about-intro">
-                        <p>I am currently pursuing my <strong></strong>Bachelor of Science (B.Sc.) in Computer Science and Engineering (CSE)</strong> at <strong>Khulna University of Engineering & Technology (KUET)</strong>. My academic journey has been consistently marked by <strong>dedication, performance, and a passion for technology</strong>.</p>
+                        <p>I am currently pursuing my <strong>Bachelor of Science (B.Sc.) in Computer Science and Engineering (CSE)</strong> at <strong>Khulna University of Engineering & Technology (KUET)</strong>. My academic journey has been consistently marked by <strong>dedication, performance, and a passion for technology</strong>.</p>
                         
                         <p>I am actively developing my skills in <strong>Python and iOS development</strong>, while my areas of expertise include <strong>software development and web development</strong>. Alongside maintaining a <strong>strong CGPA</strong>, I am also engaged in <strong>research activities</strong>, which help me deepen my understanding of cutting-edge technologies and problem-solving approaches.</p>
                         
                         <p>My goal is to grow as a <strong>versatile developer</strong>, capable of contributing to <strong>impactful projects in both academia and the tech industry</strong>.</p>
                     </div>
                     
-                    <div class="education-section">
-                        <h3>Educational Journey</h3>
-                        
-                        <div class="education-item">
-                            <div class="education-year">2023 – Present</div>
-                            <div class="education-details">
-                                <h4>Bachelor of Science (B.Sc.) in Computer Science and Engineering (CSE)</h4>
-                                <p class="institution">Khulna University of Engineering & Technology (KUET)</p>
-                                <p class="description">Currently studying with good academic performance and engaging in research activities.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="education-item">
-                            <div class="education-year">2022</div>
-                            <div class="education-details">
-                                <h4>Higher Secondary Certificate (HSC)</h4>
-                                <p class="institution">Chittagong College</p>
-                                <p class="description">Achieved GPA 5.00</p>
-                                <p class="achievement">Ranked 2nd in Chittagong Board with distinct marks.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="education-item">
-                            <div class="education-year">2019</div>
-                            <div class="education-details">
-                                <h4>Secondary School Certificate (SSC)</h4>
-                                <p class="institution">Chittagong Collegiate School</p>
-                                <p class="description">Achieved GPA 5.00</p>
-                                <p class="achievement">Ranked 3rd in Chittagong Board with distinct marks.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="achievements-section">
-                        <h3>Notable Achievements</h3>
-                        
-                        <div class="achievement-year">
-                            <h4>2020</h4>
-                            <ul class="achievement-list">
-                                <li>8th Place – Team Selection Test, GeCAA</li>
-                                <li>83rd Place – Estonian Open Astronomy Olympiad</li>
-                                <li>National Champion – Bangladesh Olympiad on Astronomy and Astrophysics</li>
-                                <li>National Runner-Up – Inter School and College Programming Contest</li>
-                                <li>Runner-Up – Drishty Game of Logic</li>
-                                <li>Participant – Asian Pacific Mathematics Olympiad (APMO)</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="achievement-year">
-                            <h4>2019</h4>
-                            <ul class="achievement-list">
-                                <li>Champion (Selection Round), Regional Runner-Up – Bangladesh Mathematical Olympiad</li>
-                                <li>National 6th Place – Bangladesh Astronomy Olympiad</li>
-                                <li>National 3rd Place – Bangladesh Olympiad on Astronomy and Astrophysics</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="achievement-year">
-                            <h4>2018</h4>
-                            <ul class="achievement-list">
-                                <li>Regional Runner-Up – Bangladesh Physics Olympiad</li>
-                                <li>Top 20 Finalist – Banglabid 2018</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
                     <div class="blogs-section">
                         <h3>Blogs</h3>
                         <div class="blogs-grid">
+                            <!-- Static fallback content - will be replaced by dynamic content from database -->
                             <div class="blog-item">
                                 <div class="blog-content">
                                     <h4>Understanding React Hooks: A Complete Guide</h4>
@@ -259,39 +193,6 @@
                                     <div class="blog-meta">
                                         <span class="blog-author">By Iftiaq Hossen</span>
                                         <span class="blog-platform">Medium</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="blog-item">
-                                <div class="blog-content">
-                                    <h4>iOS Development with Swift: From Zero to App Store</h4>
-                                    <p class="blog-description">Complete guide to iOS development covering Swift fundamentals, UIKit, Core Data, and the app submission process with real-world project examples.</p>
-                                    <div class="blog-meta">
-                                        <span class="blog-author">By Iftiaq Hossen</span>
-                                        <span class="blog-platform">TechTune</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="blog-item">
-                                <div class="blog-content">
-                                    <h4>Cybersecurity Fundamentals: Penetration Testing Basics</h4>
-                                    <p class="blog-description">Introduction to ethical hacking and penetration testing methodologies, tools, and techniques for identifying security vulnerabilities in web applications.</p>
-                                    <div class="blog-meta">
-                                        <span class="blog-author">By Iftiaq Hossen</span>
-                                        <span class="blog-platform">Medium</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="blog-item">
-                                <div class="blog-content">
-                                    <h4>Modern Web Development: Full-Stack JavaScript</h4>
-                                    <p class="blog-description">Explore the complete JavaScript ecosystem from frontend frameworks like React to backend development with Node.js, databases, and deployment strategies.</p>
-                                    <div class="blog-meta">
-                                        <span class="blog-author">By Iftiaq Hossen</span>
-                                        <span class="blog-platform">TechTune</span>
                                     </div>
                                 </div>
                             </div>
@@ -341,24 +242,6 @@
                             <div class="skill-progress" style="width: 80%"></div>
                         </div>
                     </div>
-                    
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span class="skill-name">AWS</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 50%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span class="skill-name">Docker</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 75%"></div>
-                        </div>
-                    </div>
                 </div>
                 
                 <div class="skills-column">
@@ -395,24 +278,6 @@
                         </div>
                         <div class="skill-bar">
                             <div class="skill-progress" style="width: 78%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span class="skill-name">Data Science</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 56%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span class="skill-name">Blockchain Development</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 49%"></div>
                         </div>
                     </div>
                 </div>
@@ -467,7 +332,7 @@
             </div>
         </section>
 
-        <!-- Contact Section -->
+        <!-- Contact Section with Database Integration -->
         <section class="contact" id="contact">
             <div class="contact-container">
                 <div class="contact-header">
@@ -479,7 +344,7 @@
                 </div>
                 
                 <div class="contact-content">
-                    <!-- Contact Form -->
+                    <!-- Contact Form with Database Integration -->
                     <div class="contact-form-section">
                         <h3>Send me a message</h3>
                         <form class="contact-form" id="contactForm">
@@ -572,7 +437,7 @@
         </section>
 
         <!-- Footer -->
-        <footer class="footer">
+        <footer class="portfolio-footer">
             <div class="footer-content">
                 <div class="footer-bottom">
                     <p>&copy; 2025 Iftiaq Hossen's Portfolio. All rights reserved.</p>
@@ -582,6 +447,50 @@
         </footer>
     </div>
     
-    <script src="script.js"></script>
-</body>
-</html>
+    <!-- Include the enhanced JavaScript with database integration -->
+    <script src="FrontEnd/script.js"></script>
+
+    <style>
+        /* Override master page styles for portfolio */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', sans-serif !important;
+        }
+
+        /* Hide the default master page navigation and footer */
+        .navbar.navbar-expand-sm {
+            display: none !important;
+        }
+
+        .container.body-content hr,
+        .container.body-content footer {
+            display: none !important;
+        }
+
+        .container.body-content {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            max-width: none;
+        }
+
+        /* Ensure portfolio container takes full width */
+        .portfolio-container {
+            width: 100%;
+            max-width: none;
+        }
+
+        /* Portfolio specific navigation */
+        .portfolio-nav {
+            position: relative;
+            z-index: 1000;
+        }
+
+        /* Ensure the form element doesn't interfere */
+        form {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</asp:Content>

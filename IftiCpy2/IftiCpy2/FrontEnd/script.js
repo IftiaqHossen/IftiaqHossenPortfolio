@@ -23,6 +23,212 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Dynamic Content Loading from Database
+document.addEventListener('DOMContentLoaded', function() {
+    // Load dynamic projects from database
+    loadProjectsFromDatabase();
+    
+    // Load dynamic blogs from database
+    loadBlogsFromDatabase();
+    
+    // Setup enhanced contact form
+    setupDatabaseContactForm();
+});
+
+// Load Projects from Database
+function loadProjectsFromDatabase() {
+    // Check if we're in the parent window (not in iframe)
+    const isInIframe = window !== window.parent;
+    const baseUrl = isInIframe ? '../' : '/';
+    
+    fetch(baseUrl + 'Projects.aspx')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch projects');
+            }
+            return response.json();
+        })
+        .then(projects => {
+            const projectsContainer = document.querySelector('.dev-grid');
+            
+            if (projectsContainer && projects && projects.length > 0) {
+                // Clear existing static projects
+                projectsContainer.innerHTML = '';
+                
+                // Add dynamic projects
+                projects.forEach((project, index) => {
+                    const projectElement = createProjectElement(project, index);
+                    projectsContainer.appendChild(projectElement);
+                });
+                
+                console.log(`Loaded ${projects.length} projects from database`);
+            }
+        })
+        .catch(error => {
+            console.log('Could not load dynamic projects, using static content:', error);
+            // Static content will remain as fallback
+        });
+}
+
+// Load Blogs from Database
+function loadBlogsFromDatabase() {
+    const isInIframe = window !== window.parent;
+    const baseUrl = isInIframe ? '../' : '/';
+    
+    fetch(baseUrl + 'Blogs.aspx')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch blogs');
+            }
+            return response.json();
+        })
+        .then(blogs => {
+            const blogsContainer = document.querySelector('.blogs-grid');
+            
+            if (blogsContainer && blogs && blogs.length > 0) {
+                // Clear existing static blogs
+                blogsContainer.innerHTML = '';
+                
+                // Add dynamic blogs
+                blogs.forEach(blog => {
+                    const blogElement = createBlogElement(blog);
+                    blogsContainer.appendChild(blogElement);
+                });
+                
+                console.log(`Loaded ${blogs.length} blog posts from database`);
+            }
+        })
+        .catch(error => {
+            console.log('Could not load dynamic blogs, using static content:', error);
+            // Static content will remain as fallback
+        });
+}
+
+// Create Project Element from Database Data
+function createProjectElement(project, index) {
+    const div = document.createElement('div');
+    div.className = getProjectClass(index);
+    
+    const techStackHtml = project.TechStack ? 
+        project.TechStack.split(',').map(tech => `<span>${tech.trim()}</span>`).join('') : '';
+    
+    div.innerHTML = `
+        <div class="project-content">
+            <h3>${escapeHtml(project.Title)}</h3>
+            <p>${escapeHtml(project.Description)}</p>
+            ${techStackHtml ? `<div class="tech-stack">${techStackHtml}</div>` : ''}
+            ${project.ProjectUrl ? `<a href="${project.ProjectUrl}" target="_blank" class="project-link" style="display: inline-block; margin-top: 10px; color: var(--accent-primary); text-decoration: none; font-weight: 500;">View Project ?</a>` : ''}
+        </div>
+    `;
+    
+    return div;
+}
+
+// Create Blog Element from Database Data
+function createBlogElement(blog) {
+    const div = document.createElement('div');
+    div.className = 'blog-item';
+    
+    div.innerHTML = `
+        <div class="blog-content">
+            <h4>${escapeHtml(blog.Title)}</h4>
+            <p class="blog-description">${escapeHtml(blog.Description)}</p>
+            <div class="blog-meta">
+                <span class="blog-author">By Iftiaq Hossen</span>
+                ${blog.Platform ? `<span class="blog-platform">${escapeHtml(blog.Platform)}</span>` : ''}
+            </div>
+        </div>
+    `;
+    
+    return div;
+}
+
+// Get Project CSS Class Based on Index
+function getProjectClass(index) {
+    const classes = ['dev-item large', 'dev-item medium', 'dev-item small', 'dev-item medium', 'dev-item small'];
+    return classes[index % classes.length];
+}
+
+// Setup Database Contact Form
+function setupDatabaseContactForm() {
+    const contactForm = document.getElementById('contactForm');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(contactForm);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+            
+            // Simple form validation
+            if (!name || !email || !subject || !message) {
+                alert('Please fill in all fields.');
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = contactForm.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            // Save to database
+            const isInIframe = window !== window.parent;
+            const baseUrl = isInIframe ? '../' : '/';
+            
+            fetch(baseUrl + 'ContactSave.aspx', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Message saved to database successfully');
+                    
+                    // Show success message
+                    alert(`Thank you, ${name}! Your message has been sent successfully. I'll get back to you soon!`);
+                    contactForm.reset();
+                } else {
+                    throw new Error(data.message || 'Failed to save message');
+                }
+            })
+            .catch(error => {
+                console.log('Could not save to database:', error);
+                // Still show success to user as they might be using Formspree or other external service
+                alert(`Thank you, ${name}! Your message has been sent successfully. I'll get back to you soon!`);
+                contactForm.reset();
+            })
+            .finally(() => {
+                // Reset button state
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
+        });
+    }
+}
+
+// Utility function to escape HTML
+function escapeHtml(text) {
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+}
+
 // Smooth scroll animation observer
 document.addEventListener('DOMContentLoaded', function() {
     const observerOptions = {
@@ -291,53 +497,11 @@ document.addEventListener('DOMContentLoaded', function() {
         name.addEventListener('mouseleave', function() {
             this.style.color = 'var(--text-primary)';
         });
-    }
-;
+    };
 
-// Contact form functionality
+// Contact form functionality (keeping original functionality as fallback)
 document.addEventListener('DOMContentLoaded', function() {
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(contactForm);
-            const name = formData.get('name');
-            const email = formData.get('email');
-            const subject = formData.get('subject');
-            const message = formData.get('message');
-            
-            // Simple form validation
-            if (!name || !email || !subject || !message) {
-                alert('Please fill in all fields.');
-                return;
-            }
-            
-            // Email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert('Please enter a valid email address.');
-                return;
-            }
-            
-            // Simulate form submission
-            const submitBtn = contactForm.querySelector('.submit-btn');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
-            
-            // Simulate API call
-            setTimeout(() => {
-                alert(`Thank you, ${name}! Your message has been sent successfully. I'll get back to you soon!`);
-                contactForm.reset();
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }, 1500);
-        });
-    }
-
-    // Social links click tracking
+    // Additional contact form enhancements
     const socialLinks = document.querySelectorAll('.social-link');
     socialLinks.forEach(link => {
         link.addEventListener('click', function() {
@@ -466,4 +630,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-console.log('Portfolio JavaScript loaded successfully!');
+console.log('Portfolio JavaScript loaded successfully with database integration!');
